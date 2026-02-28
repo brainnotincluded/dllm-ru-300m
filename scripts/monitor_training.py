@@ -32,7 +32,7 @@ def monitor_training(log_dir: str = "outputs/logs"):
         progress = step / 100000 * 100  # Assuming 100K steps
         
         print("="*50)
-        print("📊 DLLM-RU-300M Training Progress")
+        print("DLLM-RU-300M Training Progress")
         print("="*50)
         print(f"Step:        {step:,} / 100,000")
         print(f"Progress:    {progress:.1f}%")
@@ -51,7 +51,7 @@ def monitor_training(log_dir: str = "outputs/logs"):
             print(f"Steps/sec:   {steps_per_second:.2f}")
             print(f"ETA:         {remaining_hours:.1f} hours ({remaining_hours/24:.1f} days)")
         
-        print("\n💾 Checkpoints:")
+        print("\nCheckpoints:")
         checkpoint_dir = Path("outputs/checkpoints")
         if checkpoint_dir.exists():
             checkpoints = sorted(checkpoint_dir.glob("checkpoint_*.pt"))

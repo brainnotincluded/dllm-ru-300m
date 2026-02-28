@@ -51,7 +51,7 @@ def detect_language(text: str) -> str:
         return "mixed"
 
 
-def process_file(input_path: Path, output_path: Path, min_length: int = 100) -> int:
+def process_file(input_path: Path, output_path: Path, min_length: int = 10) -> int:
     """Process a single file."""
     lines = []
     

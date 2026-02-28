@@ -4,53 +4,37 @@ import json
 import time
 from pathlib import Path
 from typing import Dict, Any, Optional
-import wandb
-from torch.utils.tensorboard import SummaryWriter
 
 
 class MetricsTracker:
     """Track and log training metrics."""
     
-    def __init__(self, log_dir: str, use_wandb: bool = True, project_name: str = "dllm-ru-300m"):
+    def __init__(self, log_dir: str):
         self.log_dir = Path(log_dir)
         self.log_dir.mkdir(parents=True, exist_ok=True)
-        
-        self.use_wandb = use_wandb
         self.step = 0
-        self.epoch = 0
         
-        # TensorBoard
-        self.tb_writer = SummaryWriter(self.log_dir / "tensorboard")
-        
-        # Weights & Biases
-        if use_wandb:
-            wandb.init(project=project_name, dir=str(self.log_dir))
+        # Log file
+        self.log_file = self.log_dir / "training_log.jsonl"
     
     def log_step(self, metrics: Dict[str, float], step: Optional[int] = None):
         """Log metrics for a single step."""
         if step is not None:
             self.step = step
         
-        # Log to TensorBoard
-        for key, value in metrics.items():
-            self.tb_writer.add_scalar(key, value, self.step)
+        # Add timestamp
+        metrics["step"] = self.step
+        metrics["timestamp"] = time.time()
         
-        # Log to W&B
-        if self.use_wandb:
-            wandb.log(metrics, step=self.step)
+        # Write to file
+        with open(self.log_file, "a") as f:
+            f.write(json.dumps(metrics) + "\n")
         
         self.step += 1
     
-    def log_hyperparams(self, params: Dict[str, Any]):
-        """Log hyperparameters."""
-        if self.use_wandb:
-            wandb.config.update(params)
-    
     def close(self):
         """Close loggers."""
-        self.tb_writer.close()
-        if self.use_wandb:
-            wandb.finish()
+        pass
 
 
 class CheckpointManager:
@@ -90,11 +74,6 @@ class CheckpointManager:
             old_checkpoint = self.checkpoints.pop(0)
             if old_checkpoint.exists():
                 old_checkpoint.unlink()
-        
-        # Save best checkpoint
-        if is_best:
-            best_path = self.checkpoint_dir / "best_checkpoint.pt"
-            torch.save(checkpoint, best_path)
         
         # Save latest checkpoint
         latest_path = self.checkpoint_dir / "latest_checkpoint.pt"
@@ -149,12 +128,3 @@ class TrainingTimer:
             "elapsed_time": elapsed,
             "steps_per_second": 1.0 / avg_step_time if avg_step_time > 0 else 0,
         }
-    
-    def estimate_remaining(self, current_step: int, total_steps: int) -> float:
-        """Estimate remaining time in seconds."""
-        if len(self.step_times) == 0:
-            return 0.0
-        
-        avg_step_time = sum(self.step_times) / len(self.step_times)
-        remaining_steps = total_steps - current_step
-        return avg_step_time * remaining_steps

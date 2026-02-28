@@ -31,7 +31,11 @@ def quick_test(batch_size, seq_len, checkpoint, num_iters=5):
     model = DiffusionLM(config).cuda().to(torch.bfloat16)
     
     if checkpoint:
-        model.gradient_checkpointing_enable()
+        # Enable gradient checkpointing
+        model.gradient_checkpointing = True
+        for module in model.modules():
+            if hasattr(module, 'gradient_checkpointing'):
+                module.gradient_checkpointing = True
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
     

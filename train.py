@@ -52,7 +52,7 @@ def main():
     class ModelConfig:
         vocab_size: int = 52256
         hidden_size: int = 1024 if args.full_model else 512
-        num_layers: int = 16 if args.full_model else 8  # Reduced from 24 to 16 for speed
+        num_layers: int = 24 if args.full_model else 8
         num_heads: int = 16 if args.full_model else 8
         max_position_embeddings: int = 2048
         intermediate_size: int = 4096 if args.full_model else 2048

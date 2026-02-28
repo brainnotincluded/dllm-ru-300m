@@ -1,0 +1,272 @@
+Simplified and Generalized Masked Diffusion for Discrete Data
+  arXiv: http://arxiv.org/abs/2406.04329v4
+  PDF: https://arxiv.org/pdf/2406.04329v4
+
+Is DPO Superior to PPO for LLM Alignment? A Comprehensive Study
+  arXiv: http://arxiv.org/abs/2404.10719v3
+  PDF: https://arxiv.org/pdf/2404.10719v3
+
+DPO Meets PPO: Reinforced Token Optimization for RLHF
+  arXiv: http://arxiv.org/abs/2404.18922v4
+  PDF: https://arxiv.org/pdf/2404.18922v4
+
+ReMax: A Simple, Effective, and Efficient Reinforcement Learning Method for Aligning Large Language Models
+  arXiv: http://arxiv.org/abs/2310.10505v4
+  PDF: https://arxiv.org/pdf/2310.10505v4
+
+Why Masking Diffusion Works: Condition on the Jump Schedule for Improved Discrete Diffusion
+  arXiv: http://arxiv.org/abs/2506.08316v2
+  PDF: https://arxiv.org/pdf/2506.08316v2
+
+Self-Rewarding Sequential Monte Carlo for Masked Diffusion Language Models
+  arXiv: http://arxiv.org/abs/2602.01849v1
+  PDF: https://arxiv.org/pdf/2602.01849v1
+
+Likelihood-Based Diffusion Language Models
+  arXiv: http://arxiv.org/abs/2305.18619v1
+  PDF: https://arxiv.org/pdf/2305.18619v1
+
+Is Reinforcement Learning (Not) for Natural Language Processing: Benchmarks, Baselines, and Building Blocks for Natural Language Policy Optimization
+  arXiv: http://arxiv.org/abs/2210.01241v3
+  PDF: https://arxiv.org/pdf/2210.01241v3
+
+Exploring the Power of Diffusion Large Language Models for Software Engineering: An Empirical Investigation
+  arXiv: http://arxiv.org/abs/2510.04605v1
+  PDF: https://arxiv.org/pdf/2510.04605v1
+
+Dream-Coder 7B: An Open Diffusion Language Model for Code
+  arXiv: http://arxiv.org/abs/2509.01142v1
+  PDF: https://arxiv.org/pdf/2509.01142v1
+
+Path Planning for Masked Diffusion Model Sampling
+  arXiv: http://arxiv.org/abs/2502.03540v4
+  PDF: https://arxiv.org/pdf/2502.03540v4
+
+Scaling Behavior of Discrete Diffusion Language Models
+  arXiv: http://arxiv.org/abs/2512.10858v3
+  PDF: https://arxiv.org/pdf/2512.10858v3
+
+DreamOn: Diffusion Language Models For Code Infilling Beyond Fixed-size Canvas
+  arXiv: http://arxiv.org/abs/2602.01326v1
+  PDF: https://arxiv.org/pdf/2602.01326v1
+
+Scaling Data-Constrained Language Models
+  arXiv: http://arxiv.org/abs/2305.16264v5
+  PDF: https://arxiv.org/pdf/2305.16264v5
+
+Pretrain Value, Not Reward: Decoupled Value Policy Optimization
+  arXiv: http://arxiv.org/abs/2502.16944v2
+  PDF: https://arxiv.org/pdf/2502.16944v2
+
+Masked Diffusion Models are Secretly Time-Agnostic Masked Models and Exploit Inaccurate Categorical Sampling
+  arXiv: http://arxiv.org/abs/2409.02908v6
+  PDF: https://arxiv.org/pdf/2409.02908v6
+
+UltraLLaDA: Scaling the Context Length to 128K for Diffusion Large Language Models
+  arXiv: http://arxiv.org/abs/2510.10481v1
+  PDF: https://arxiv.org/pdf/2510.10481v1
+
+Guided Star-Shaped Masked Diffusion
+  arXiv: http://arxiv.org/abs/2510.08369v1
+  PDF: https://arxiv.org/pdf/2510.08369v1
+
+Theory-Informed Improvements to Classifier-Free Guidance for Discrete Diffusion Models
+  arXiv: http://arxiv.org/abs/2507.08965v1
+  PDF: https://arxiv.org/pdf/2507.08965v1
+
+A Parametric and Feasibility Study for Data Sampling of the Dynamic Mode Decomposition--Range, Resolution, and Universal Convergence States
+  arXiv: http://arxiv.org/abs/2110.06573v2
+  PDF: https://arxiv.org/pdf/2110.06573v2
+
+Scaling Diffusion Language Models via Adaptation from Autoregressive Models
+  arXiv: http://arxiv.org/abs/2410.17891v3
+  PDF: https://arxiv.org/pdf/2410.17891v3
+
+Simple and Effective Masked Diffusion Language Models
+  arXiv: http://arxiv.org/abs/2406.07524v2
+  PDF: https://arxiv.org/pdf/2406.07524v2
+
+Learning to Parallel: Accelerating Diffusion Large Language Models via Learnable Parallel Decoding
+  arXiv: http://arxiv.org/abs/2509.25188v2
+  PDF: https://arxiv.org/pdf/2509.25188v2
+
+Fast Training of Diffusion Models with Masked Transformers
+  arXiv: http://arxiv.org/abs/2306.09305v2
+  PDF: https://arxiv.org/pdf/2306.09305v2
+
+Information-Theoretic Discrete Diffusion
+  arXiv: http://arxiv.org/abs/2510.24088v1
+  PDF: https://arxiv.org/pdf/2510.24088v1
+
+ShadowKV: KV Cache in Shadows for High-Throughput Long-Context LLM Inference
+  arXiv: http://arxiv.org/abs/2410.21465v3
+  PDF: https://arxiv.org/pdf/2410.21465v3
+
+Scaling Laws for Neural Language Models
+  arXiv: http://arxiv.org/abs/2001.08361v1
+  PDF: https://arxiv.org/pdf/2001.08361v1
+
+Scaling up Masked Diffusion Models on Text
+  arXiv: http://arxiv.org/abs/2410.18514v3
+  PDF: https://arxiv.org/pdf/2410.18514v3
+
+What Language Model Architecture and Pretraining Objective Work Best for Zero-Shot Generalization?
+  arXiv: http://arxiv.org/abs/2204.05832v1
+  PDF: https://arxiv.org/pdf/2204.05832v1
+
+TiDAR: Think in Diffusion, Talk in Autoregression
+  arXiv: http://arxiv.org/abs/2511.08923v1
+  PDF: https://arxiv.org/pdf/2511.08923v1
+
+Remasking Discrete Diffusion Models with Inference-Time Scaling
+  arXiv: http://arxiv.org/abs/2503.00307v4
+  PDF: https://arxiv.org/pdf/2503.00307v4
+
+Optimizing Safe and Aligned Language Generation: A Multi-Objective GRPO Approach
+  arXiv: http://arxiv.org/abs/2503.21819v1
+  PDF: https://arxiv.org/pdf/2503.21819v1
+
+LongLLaDA: Unlocking Long Context Capabilities in Diffusion LLMs
+  arXiv: http://arxiv.org/abs/2506.14429v3
+  PDF: https://arxiv.org/pdf/2506.14429v3
+
+LLaDA 1.5: Variance-Reduced Preference Optimization for Large Language Diffusion Models
+  arXiv: http://arxiv.org/abs/2505.19223v2
+  PDF: https://arxiv.org/pdf/2505.19223v2
+
+Review, Remask, Refine (R3): Process-Guided Block Diffusion for Text Generation
+  arXiv: http://arxiv.org/abs/2507.08018v1
+  PDF: https://arxiv.org/pdf/2507.08018v1
+
+VRPO: Rethinking Value Modeling for Robust RL Training under Noisy Supervision
+  arXiv: http://arxiv.org/abs/2508.03058v1
+  PDF: https://arxiv.org/pdf/2508.03058v1
+
+Your Absorbing Discrete Diffusion Secretly Models the Bayesian Posterior
+  arXiv: http://arxiv.org/abs/2507.07586v2
+  PDF: https://arxiv.org/pdf/2507.07586v2
+
+LlamaV-o1: Rethinking Step-by-step Visual Reasoning in LLMs
+  arXiv: http://arxiv.org/abs/2501.06186v1
+  PDF: https://arxiv.org/pdf/2501.06186v1
+
+Structured Denoising Diffusion Models in Discrete State-Spaces
+  arXiv: http://arxiv.org/abs/2107.03006v3
+  PDF: https://arxiv.org/pdf/2107.03006v3
+
+Latent Refinement Decoding: Enhancing Diffusion-Based Language Models by Refining Belief States
+  arXiv: http://arxiv.org/abs/2510.11052v2
+  PDF: https://arxiv.org/pdf/2510.11052v2
+
+RRHF: Rank Responses to Align Language Models with Human Feedback without tears
+  arXiv: http://arxiv.org/abs/2304.05302v3
+  PDF: https://arxiv.org/pdf/2304.05302v3
+
+Efficient Training of Language Models to Fill in the Middle
+  arXiv: http://arxiv.org/abs/2207.14255v1
+  PDF: https://arxiv.org/pdf/2207.14255v1
+
+Think While You Generate: Discrete Diffusion with Planned Denoising
+  arXiv: http://arxiv.org/abs/2410.06264v2
+  PDF: https://arxiv.org/pdf/2410.06264v2
+
+Double Descent as a Lens for Sample Efficiency in Autoregressive vs. Discrete Diffusion Models
+  arXiv: http://arxiv.org/abs/2509.24974v1
+  PDF: https://arxiv.org/pdf/2509.24974v1
+
+LLaDA-V: Large Language Diffusion Models with Visual Instruction Tuning
+  arXiv: http://arxiv.org/abs/2505.16933v2
+  PDF: https://arxiv.org/pdf/2505.16933v2
+
+Large Language Diffusion Models
+  arXiv: http://arxiv.org/abs/2502.09992v3
+  PDF: https://arxiv.org/pdf/2502.09992v3
+
+No Compute Left Behind: Rethinking Reasoning and Sampling with Masked Diffusion Models
+  arXiv: http://arxiv.org/abs/2510.19990v1
+  PDF: https://arxiv.org/pdf/2510.19990v1
+
+DuoAttention: Efficient Long-Context LLM Inference with Retrieval and Streaming Heads
+  arXiv: http://arxiv.org/abs/2410.10819v1
+  PDF: https://arxiv.org/pdf/2410.10819v1
+
+A Cheaper and Better Diffusion Language Model with Soft-Masked Noise
+  arXiv: http://arxiv.org/abs/2304.04746v1
+  PDF: https://arxiv.org/pdf/2304.04746v1
+
+FlashDLM: Accelerating Diffusion Language Model Inference via Efficient KV Caching and Guided Diffusion
+  arXiv: http://arxiv.org/abs/2505.21467v2
+  PDF: https://arxiv.org/pdf/2505.21467v2
+
+Adapting LLaMA Decoder to Vision Transformer
+  arXiv: http://arxiv.org/abs/2404.06773v4
+  PDF: https://arxiv.org/pdf/2404.06773v4
+
+Beyond Autoregression: An Empirical Study of Diffusion Large Language Models for Code Generation
+  arXiv: http://arxiv.org/abs/2509.11252v2
+  PDF: https://arxiv.org/pdf/2509.11252v2
+
+Beyond Autoregression: Fast LLMs via Self-Distillation Through Time
+  arXiv: http://arxiv.org/abs/2410.21035v2
+  PDF: https://arxiv.org/pdf/2410.21035v2
+
+Beyond Next-Token Prediction: A Performance Characterization of Diffusion versus Autoregressive Language Models
+  arXiv: http://arxiv.org/abs/2510.04146v2
+  PDF: https://arxiv.org/pdf/2510.04146v2
+
+Block Diffusion: Interpolating Between Autoregressive and Diffusion Language Models
+  arXiv: http://arxiv.org/abs/2503.09573v3
+  PDF: https://arxiv.org/pdf/2503.09573v3
+
+Breaking AR's Sampling Bottleneck: Provable Acceleration via Diffusion Language Models
+  arXiv: http://arxiv.org/abs/2505.21400v2
+  PDF: https://arxiv.org/pdf/2505.21400v2
+
+DiffuCoder: Understanding and Improving Masked Diffusion Models for Code Generation
+  arXiv: http://arxiv.org/abs/2506.20639v2
+  PDF: https://arxiv.org/pdf/2506.20639v2
+
+Diffusion Beats Autoregressive in Data-Constrained Settings
+  arXiv: http://arxiv.org/abs/2507.15857v7
+  PDF: https://arxiv.org/pdf/2507.15857v7
+
+Diffusion Language Models are Super Data Learners
+  arXiv: http://arxiv.org/abs/2511.03276v1
+  PDF: https://arxiv.org/pdf/2511.03276v1
+
+Diffusion Language Models Know the Answer Before Decoding
+  arXiv: http://arxiv.org/abs/2508.19982v3
+  PDF: https://arxiv.org/pdf/2508.19982v3
+
+Diffusion LLMs Can Do Faster-Than-AR Inference via Discrete Diffusion Forcing
+  arXiv: http://arxiv.org/abs/2508.09192v1
+  PDF: https://arxiv.org/pdf/2508.09192v1
+
+Diffusion vs. Autoregressive Language Models: A Text Embedding Perspective
+  arXiv: http://arxiv.org/abs/2505.15045v1
+  PDF: https://arxiv.org/pdf/2505.15045v1
+
+DiffusionBERT: Improving Generative Masked Language Models with Diffusion Models
+  arXiv: http://arxiv.org/abs/2211.15029v2
+  PDF: https://arxiv.org/pdf/2211.15029v2
+
+Discrete Diffusion Models for Language Generation
+  arXiv: http://arxiv.org/abs/2507.07050v1
+  PDF: https://arxiv.org/pdf/2507.07050v1
+
+dKV-Cache: The Cache for Diffusion Language Models
+  arXiv: http://arxiv.org/abs/2505.15781v1
+  PDF: https://arxiv.org/pdf/2505.15781v1
+
+dLLM-Cache: Accelerating Diffusion Large Language Models with Adaptive Caching
+  arXiv: http://arxiv.org/abs/2506.06295v1
+  PDF: https://arxiv.org/pdf/2506.06295v1
+
+Don't Forget Your Reward Values: Language Model Alignment via Value-based Calibration
+  arXiv: http://arxiv.org/abs/2402.16030v1
+  PDF: https://arxiv.org/pdf/2402.16030v1
+
+Don't Settle Too Early: Self-Reflective Remasking for Diffusion Language Models
+  arXiv: http://arxiv.org/abs/2509.23653v1
+  PDF: https://arxiv.org/pdf/2509.23653v1
+

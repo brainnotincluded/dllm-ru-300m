@@ -1,0 +1,402 @@
+#!/usr/bin/env python3
+"""
+DLLM - Diffusion Language Model Research Assistant CLI
+A powerful RAG-enabled research assistant for exploring 112+ DLLM papers
+
+Usage:
+    dllm [OPTIONS] COMMAND [ARGS]...
+
+Commands:
+    index       Index all PDF papers into vector database
+    query       Query the research papers (RAG-enabled)
+    chat        Start interactive chat mode
+    stats       Show indexing statistics
+    papers      List all papers in the collection
+    search      Search papers by keyword
+    config      Show current configuration
+    help        Show detailed help
+
+Examples:
+    dllm index                           # Index all papers
+    dllm query "What is dLLM framework?" # Single query
+    dllm chat                            # Interactive mode
+    dllm query "speed optimization" --model qwen3:32b --top-k 10
+"""
+
+import os
+import sys
+import argparse
+import json
+from pathlib import Path
+from typing import Optional, List
+
+# Import RAG components
+from rag_complete import DLLMPaperIndexer, DLLMRAGQuery
+
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://62.140.252.238:11434")
+DEFAULT_MODEL = "llama3.2"
+PAPERS_DIR = "./papers"
+
+def print_banner():
+    """Print CLI banner"""
+    print("""
+╔═══════════════════════════════════════════════════════════╗
+║           DLLM - Diffusion Language Model RAG             ║
+║                   Research Assistant CLI                  ║
+╚═══════════════════════════════════════════════════════════╝
+""")
+
+def get_available_models() -> List[str]:
+    """Get list of available Ollama models"""
+    try:
+        import requests
+        response = requests.get(f"{OLLAMA_HOST}/api/tags", timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            return [m['name'] for m in data.get('models', [])]
+    except:
+        pass
+    return []
+
+def cmd_index(args):
+    """Index all papers"""
+    print_banner()
+    print("📚 INDEXING PAPERS")
+    print("=" * 60)
+    
+    indexer = DLLMPaperIndexer()
+    if not indexer.init():
+        print("❌ Failed to initialize indexer")
+        return 1
+    
+    papers_dir = args.papers_dir or PAPERS_DIR
+    stats = indexer.index_directory(papers_dir)
+    
+    print(f"\n✅ Indexing complete!")
+    print(f"   Papers indexed: {stats['indexed']}")
+    print(f"   Total chunks: {stats['chunks']}")
+    print(f"   Errors: {stats['errors']}")
+    return 0
+
+def cmd_query(args):
+    """Query papers with RAG"""
+    if not args.query_text:
+        print("❌ Please provide a query: dllm query 'your question'")
+        return 1
+    
+    print_banner()
+    print(f"🔍 QUERY: {args.query_text}")
+    print(f"🤖 Model: {args.model}")
+    print(f"📊 Top-K: {args.top_k}")
+    print("=" * 60)
+    
+    rag = DLLMRAGQuery(ollama_host=OLLAMA_HOST)
+    
+    print("\n📄 Retrieving relevant papers...")
+    result = rag.query(args.query_text, top_k=args.top_k, model=args.model)
+    
+    print(f"\n💡 ANSWER:")
+    print("-" * 60)
+    print(result['answer'])
+    print("-" * 60)
+    
+    print(f"\n📚 Sources:")
+    for i, source in enumerate(result['sources'], 1):
+        print(f"   {i}. {source['paper_title']} (score: {source['score']:.3f})")
+    
+    return 0
+
+def cmd_chat(args):
+    """Interactive chat mode"""
+    print_banner()
+    print("🤖 INTERACTIVE CHAT MODE")
+    print("=" * 60)
+    print(f"Ollama Server: {OLLAMA_HOST}")
+    print(f"Default Model: {args.model}")
+    print(f"\nCommands:")
+    print("  /quit     - Exit chat")
+    print("  /models   - List available models")
+    print("  /stats    - Show collection stats")
+    print("  /clear    - Clear screen")
+    print("  /help     - Show help")
+    print("=" * 60 + "\n")
+    
+    rag = DLLMRAGQuery(ollama_host=OLLAMA_HOST)
+    models = get_available_models()
+    
+    while True:
+        try:
+            query = input("\n❓ You: ").strip()
+            
+            if not query:
+                continue
+            
+            if query == "/quit":
+                print("\n👋 Goodbye!")
+                break
+            elif query == "/models":
+                if models:
+                    print("\n📋 Available models:")
+                    for m in models[:10]:  # Show first 10
+                        print(f"   • {m}")
+                    if len(models) > 10:
+                        print(f"   ... and {len(models) - 10} more")
+                else:
+                    print("❌ Could not fetch models")
+            elif query == "/stats":
+                try:
+                    from qdrant_client import QdrantClient
+                    client = QdrantClient(path="./rag_data/qdrant")
+                    info = client.get_collection("dllm_papers_chunks")
+                    print(f"\n📊 Collection Stats:")
+                    print(f"   Vectors: {info.points_count}")
+                    print(f"   Status: {info.status}")
+                except Exception as e:
+                    print(f"❌ Error: {e}")
+            elif query == "/clear":
+                os.system('clear' if os.name != 'nt' else 'cls')
+                print_banner()
+            elif query == "/help":
+                print("\n💡 Commands:")
+                print("  /quit     - Exit chat")
+                print("  /models   - List available models")
+                print("  /stats    - Show collection stats")
+                print("  /clear    - Clear screen")
+                print("  /help     - Show this help")
+            else:
+                print("\n🤔 Thinking...")
+                result = rag.query(query, top_k=args.top_k, model=args.model)
+                print(f"\n💡 Assistant: {result['answer']}\n")
+                
+        except KeyboardInterrupt:
+            print("\n\n👋 Goodbye!")
+            break
+        except Exception as e:
+            print(f"\n❌ Error: {e}")
+    
+    return 0
+
+def cmd_stats(args):
+    """Show collection statistics"""
+    print_banner()
+    print("📊 COLLECTION STATISTICS")
+    print("=" * 60)
+    
+    try:
+        from qdrant_client import QdrantClient
+        client = QdrantClient(path="./rag_data/qdrant")
+        
+        collections = client.get_collections()
+        print(f"\n📁 Collections:")
+        for coll in collections.collections:
+            print(f"   • {coll.name}")
+            
+            if coll.name == "dllm_papers_chunks":
+                info = client.get_collection(coll.name)
+                print(f"     Vectors: {info.points_count}")
+                print(f"     Status: {info.status}")
+                print(f"     Distance: {info.config.params.vectors.distance}")
+                
+                # Count unique papers
+                try:
+                    all_points = client.scroll(
+                        collection_name=coll.name,
+                        limit=10000
+                    )[0]
+                    unique_papers = set()
+                    for point in all_points:
+                        unique_papers.add(point.payload.get("filename", ""))
+                    print(f"     Unique papers: {len(unique_papers)}")
+                except:
+                    pass
+    
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        print("   Collection may not exist yet. Run 'dllm index' first.")
+    
+    return 0
+
+def cmd_papers(args):
+    """List all papers"""
+    print_banner()
+    print("📚 PAPERS IN COLLECTION")
+    print("=" * 60)
+    
+    papers_dir = Path(PAPERS_DIR)
+    if not papers_dir.exists():
+        print(f"❌ Papers directory not found: {PAPERS_DIR}")
+        return 1
+    
+    pdfs = sorted(papers_dir.glob("*.pdf"))
+    
+    if not pdfs:
+        print("❌ No PDFs found")
+        return 1
+    
+    print(f"\nTotal papers: {len(pdfs)}\n")
+    
+    # Group by category if possible
+    categories = {}
+    for pdf in pdfs:
+        name = pdf.stem
+        # Try to extract category from filename
+        if "LLaDA" in name or "dLLM" in name or "DiffusionBERT" in name:
+            cat = "Core Models"
+        elif "speed" in name.lower() or "accelerat" in name.lower() or "fast" in name.lower():
+            cat = "Speed Optimization"
+        elif "train" in name.lower() or "align" in name.lower() or "RL" in name:
+            cat = "Training & Alignment"
+        elif "code" in name.lower() or "coder" in name.lower():
+            cat = "Code Generation"
+        elif "multimodal" in name.lower() or "vision" in name.lower():
+            cat = "Multimodal"
+        else:
+            cat = "Other"
+        
+        if cat not in categories:
+            categories[cat] = []
+        categories[cat].append(pdf)
+    
+    # Display by category
+    for cat, papers in sorted(categories.items()):
+        print(f"\n{cat} ({len(papers)} papers):")
+        for paper in papers[:5]:  # Show first 5
+            print(f"  • {paper.stem[:70]}...")
+        if len(papers) > 5:
+            print(f"  ... and {len(papers) - 5} more")
+    
+    return 0
+
+def cmd_search(args):
+    """Search papers by keyword"""
+    if not args.keyword:
+        print("❌ Please provide a keyword: dllm search 'keyword'")
+        return 1
+    
+    print_banner()
+    print(f"🔍 SEARCH: '{args.keyword}'")
+    print("=" * 60)
+    
+    papers_dir = Path(PAPERS_DIR)
+    if not papers_dir.exists():
+        print(f"❌ Papers directory not found: {PAPERS_DIR}")
+        return 1
+    
+    keyword = args.keyword.lower()
+    pdfs = list(papers_dir.glob("*.pdf"))
+    
+    matches = []
+    for pdf in pdfs:
+        if keyword in pdf.stem.lower():
+            matches.append(pdf)
+    
+    print(f"\nFound {len(matches)} matching papers:\n")
+    for i, pdf in enumerate(matches, 1):
+        print(f"{i}. {pdf.stem}")
+    
+    return 0
+
+def cmd_config(args):
+    """Show configuration"""
+    print_banner()
+    print("⚙️  CONFIGURATION")
+    print("=" * 60)
+    print(f"\nOllama Host: {OLLAMA_HOST}")
+    print(f"Default Model: {DEFAULT_MODEL}")
+    print(f"Papers Directory: {PAPERS_DIR}")
+    print(f"Qdrant Path: ./rag_data/qdrant")
+    
+    models = get_available_models()
+    if models:
+        print(f"\nAvailable Models ({len(models)} total):")
+        for m in models[:10]:
+            marker = " ⭐" if m == DEFAULT_MODEL else ""
+            print(f"  • {m}{marker}")
+        if len(models) > 10:
+            print(f"  ... and {len(models) - 10} more")
+    
+    # Check papers
+    papers_dir = Path(PAPERS_DIR)
+    if papers_dir.exists():
+        pdf_count = len(list(papers_dir.glob("*.pdf")))
+        print(f"\nPapers: {pdf_count} PDFs found")
+    else:
+        print(f"\nPapers: ❌ Directory not found")
+    
+    return 0
+
+def main():
+    """Main entry point"""
+    parser = argparse.ArgumentParser(
+        prog='dllm',
+        description='Diffusion Language Model Research Assistant CLI',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  dllm index                           # Index all papers
+  dllm query "What is dLLM?"          # Single query
+  dllm chat                            # Interactive mode
+  dllm query "speed" --model qwen3:32b # Use specific model
+  dllm stats                           # Show stats
+  dllm papers                          # List all papers
+  dllm search "optimization"           # Search papers
+        """
+    )
+    
+    subparsers = parser.add_subparsers(dest='command', help='Available commands')
+    
+    # Index command
+    index_parser = subparsers.add_parser('index', help='Index all PDF papers')
+    index_parser.add_argument('--papers-dir', default=PAPERS_DIR, help='Papers directory')
+    
+    # Query command
+    query_parser = subparsers.add_parser('query', help='Query papers with RAG')
+    query_parser.add_argument('query_text', nargs='?', help='Query text')
+    query_parser.add_argument('--model', default=DEFAULT_MODEL, help='Ollama model to use')
+    query_parser.add_argument('--top-k', type=int, default=5, help='Number of chunks to retrieve')
+    query_parser.add_argument('--interactive', '-i', action='store_true', help='Interactive mode')
+    
+    # Chat command
+    chat_parser = subparsers.add_parser('chat', help='Start interactive chat')
+    chat_parser.add_argument('--model', default=DEFAULT_MODEL, help='Ollama model to use')
+    chat_parser.add_argument('--top-k', type=int, default=5, help='Number of chunks to retrieve')
+    
+    # Stats command
+    stats_parser = subparsers.add_parser('stats', help='Show collection statistics')
+    
+    # Papers command
+    papers_parser = subparsers.add_parser('papers', help='List all papers')
+    
+    # Search command
+    search_parser = subparsers.add_parser('search', help='Search papers by keyword')
+    search_parser.add_argument('keyword', nargs='?', help='Search keyword')
+    
+    # Config command
+    config_parser = subparsers.add_parser('config', help='Show configuration')
+    
+    # Parse arguments
+    args = parser.parse_args()
+    
+    # Route to command handler
+    if args.command == 'index':
+        return cmd_index(args)
+    elif args.command == 'query':
+        if args.interactive:
+            return cmd_chat(args)
+        return cmd_query(args)
+    elif args.command == 'chat':
+        return cmd_chat(args)
+    elif args.command == 'stats':
+        return cmd_stats(args)
+    elif args.command == 'papers':
+        return cmd_papers(args)
+    elif args.command == 'search':
+        return cmd_search(args)
+    elif args.command == 'config':
+        return cmd_config(args)
+    else:
+        parser.print_help()
+        return 0
+
+if __name__ == '__main__':
+    sys.exit(main())

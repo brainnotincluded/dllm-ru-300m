@@ -1,0 +1,68 @@
+Simplified and Generalized Masked Diffusion for Discrete Data
+Is DPO Superior to PPO for LLM Alignment? A Comprehensive Study
+DPO Meets PPO: Reinforced Token Optimization for RLHF
+ReMax: A Simple, Effective, and Efficient Reinforcement Learning Method for Aligning Large Language Models
+Why Masking Diffusion Works: Condition on the Jump Schedule for Improved Discrete Diffusion
+Self-Rewarding Sequential Monte Carlo for Masked Diffusion Language Models
+Likelihood-Based Diffusion Language Models
+Is Reinforcement Learning (Not) for Natural Language Processing?: Benchmarks, Baselines, and Building Blocks for Natural Language Policy Optimization
+Exploring the Power of Diffusion Large Language Models for Software Engineering: An Empirical Investigation
+Dream-Coder 7B: An Open Diffusion Language Model for Code
+Path Planning for Masked Diffusion Model Sampling
+Scaling Behavior of Discrete Diffusion Language Models
+DreamOn: Diffusion Language Models For Code Infilling Beyond Fixed-size Canvas
+Scaling Data-Constrained Language Models
+Pretrain Value, Not Reward: Decoupled Value Policy Optimization
+Masked Diffusion Models are Secretly Time-Agnostic Masked Models and Exploit Inaccurate Categorical Sampling
+UltraLLaDA: Scaling the Context Length to 128K for Diffusion Large Language Models
+Guided Star-Shaped Masked Diffusion
+Theory-Informed Improvements to Classifier-Free Guidance for Discrete Diffusion Models
+STDD:Spatio-Temporal Dynamics-Driven Token Refinement in Diffusion Language Models
+Scaling Diffusion Language Models via Adaptation from Autoregressive Models
+Simple and Effective Masked Diffusion Language Models
+Learning to Parallel: Accelerating Diffusion Large Language Models via Learnable Parallel Decoding
+Fast Training of Diffusion Models with Masked Transformers
+Information-Theoretic Discrete Diffusion
+ShadowKV: KV Cache in Shadows for High-Throughput Long-Context LLM Inference
+Scaling Laws for Neural Language Models
+Scaling up Masked Diffusion Models on Text
+What Language Model Architecture and Pretraining Objective Work Best for Zero-Shot Generalization?
+TiDAR: Think in Diffusion, Talk in Autoregression
+Remasking Discrete Diffusion Models with Inference-Time Scaling
+Optimizing Safe and Aligned Language Generation: A Multi-Objective GRPO Approach
+LongLLaDA: Unlocking Long Context Capabilities in Diffusion LLMs
+LLaDA 1.5: Variance-Reduced Preference Optimization for Large Language Diffusion Models
+Review, Remask, Refine (R3): Process-Guided Block Diffusion for Text Generation
+VRPO: Rethinking Value Modeling for Robust RL Training under Noisy Supervision
+Your Absorbing Discrete Diffusion Secretly Models the Bayesian Posterior
+LlamaV-o1: Rethinking Step-by-step Visual Reasoning in LLMs
+Structured Denoising Diffusion Models in Discrete State-Spaces
+Latent Refinement Decoding: Enhancing Diffusion-Based Language Models by Refining Belief States
+RRHF: Rank Responses to Align Language Models with Human Feedback without tears
+Efficient Training of Language Models to Fill in the Middle
+Think While You Generate: Discrete Diffusion with Planned Denoising
+Double Descent as a Lens for Sample Efficiency in Autoregressive vs. Discrete Diffusion Models
+LLaDA-V: Large Language Diffusion Models with Visual Instruction Tuning
+Large Language Diffusion Models
+No Compute Left Behind: Rethinking Reasoning and Sampling with Masked Diffusion Models
+DuoAttention: Efficient Long-Context LLM Inference with Retrieval and Streaming Heads
+A Cheaper and Better Diffusion Language Model with Soft-Masked Noise
+Accelerating Diffusion Language Model Inference via Efficient KV Caching and Guided Diffusion
+Adapting LLaMA Decoder to Vision Transformer
+Beyond Autoregression: An Empirical Study of Diffusion Large Language Models for Code Generation
+Beyond Autoregression: Fast LLMs via Self-Distillation Through Time
+Beyond Next-Token Prediction: A Performance Characterization of Diffusion versus Autoregressive Language Models
+Block Diffusion: Interpolating Between Autoregressive and Diffusion Language Models
+Breaking AR's Sampling Bottleneck: Provable Acceleration via Diffusion Language Models
+DiffuCoder: Understanding and Improving Masked Diffusion Models for Code Generation
+Diffusion Beats Autoregressive in Data-Constrained Settings
+Diffusion Language Models are Super Data Learners
+Diffusion Language Models Know the Answer Before Decoding
+Diffusion LLMs Can Do Faster-Than-AR Inference via Discrete Diffusion Forcing
+Diffusion vs. Autoregressive Language Models: A Text Embedding Perspective
+DiffusionBERT: Improving Generative Masked Language Models with Diffusion Models
+Discrete Diffusion Models for Language Generation
+dKV-Cache: The Cache for Diffusion Language Models
+dLLM-Cache: Accelerating Diffusion Large Language Models with Adaptive Caching
+Don't Forget Your Reward Values: Language Model Alignment via Value-based Calibration
+Don't Settle Too Early: Self-Reflective Remasking for Diffusion Language Models

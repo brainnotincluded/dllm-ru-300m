@@ -27,6 +27,7 @@ def parse_args():
     parser.add_argument("--batch-size", type=int, default=4, help="Batch size")
     parser.add_argument("--learning-rate", type=float, default=3e-4, help="Learning rate")
     parser.add_argument("--resume", type=str, default=None, help="Resume from checkpoint")
+    parser.add_argument("--full-model", action="store_true", help="Use full 300M model (default: small test model)")
     return parser.parse_args()
 
 
@@ -44,22 +45,29 @@ def main():
     vocab_size = tokenizer.vocab_size()
     print(f"Vocabulary size: {vocab_size}")
     
-    # Model config (small for testing)
+    # Model config
     from dataclasses import dataclass
     
     @dataclass
     class ModelConfig:
-        vocab_size: int = 4000  # Will override this
-        hidden_size: int = 512  # Reduced for faster training
-        num_layers: int = 8     # Reduced for faster training
-        num_heads: int = 8
+        vocab_size: int = 52256
+        hidden_size: int = 1024 if args.full_model else 512
+        num_layers: int = 24 if args.full_model else 8
+        num_heads: int = 16 if args.full_model else 8
         max_position_embeddings: int = 2048
-        intermediate_size: int = 2048
+        intermediate_size: int = 4096 if args.full_model else 2048
         rms_norm_eps: float = 1e-6
         rope_theta: float = 10000.0
         dropout: float = 0.0
     
     config = ModelConfig(vocab_size=vocab_size)
+    
+    model_size = "300M" if args.full_model else "37M (test)"
+    print(f"\nModel configuration: {model_size}")
+    print(f"  Hidden size: {config.hidden_size}")
+    print(f"  Layers: {config.num_layers}")
+    print(f"  Heads: {config.num_heads}")
+    print(f"  Vocab size: {config.vocab_size}")
     
     # Initialize model
     print("Initializing model...")
@@ -78,8 +86,9 @@ def main():
     
     # Load dataset
     print("Loading dataset...")
-    dataset = TextDataset(args.data_dir, tokenizer, max_length=512)
-    dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True)
+    max_length = 2048 if args.full_model else 512
+    dataset = TextDataset(args.data_dir, tokenizer, max_length=max_length)
+    dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True, num_workers=0)
     print(f"Dataset size: {len(dataset)}")
     
     # Initialize optimizer

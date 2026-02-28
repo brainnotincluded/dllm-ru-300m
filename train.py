@@ -52,13 +52,14 @@ def main():
     class ModelConfig:
         vocab_size: int = 52256
         hidden_size: int = 1024 if args.full_model else 512
-        num_layers: int = 24 if args.full_model else 8
+        num_layers: int = 16 if args.full_model else 8  # Reduced from 24 to 16 for speed
         num_heads: int = 16 if args.full_model else 8
         max_position_embeddings: int = 2048
         intermediate_size: int = 4096 if args.full_model else 2048
         rms_norm_eps: float = 1e-6
         rope_theta: float = 10000.0
         dropout: float = 0.0
+        gradient_checkpointing: bool = True
     
     config = ModelConfig(vocab_size=vocab_size)
     
@@ -79,10 +80,18 @@ def main():
     print(f"Total parameters: {total_params / 1e6:.1f}M")
     print(f"Trainable parameters: {trainable_params / 1e6:.1f}M")
     
+    # Enable gradient checkpointing for memory efficiency
+    if hasattr(model, 'gradient_checkpointing_enable'):
+        model.gradient_checkpointing_enable()
+        print("Gradient checkpointing enabled")
+    
     # Move to device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
     print(f"Using device: {device}")
+    
+    # Mixed precision
+    scaler = torch.cuda.amp.GradScaler() if device.type == "cuda" else None
     
     # Load dataset
     print("Loading dataset...")
@@ -90,6 +99,10 @@ def main():
     dataset = TextDataset(args.data_dir, tokenizer, max_length=max_length)
     dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True, num_workers=0)
     print(f"Dataset size: {len(dataset)}")
+    
+    # Gradient accumulation
+    gradient_accumulation_steps = 4  # Effective batch size = batch_size * 4
+    print(f"Gradient accumulation steps: {gradient_accumulation_steps}")
     
     # Initialize optimizer
     optimizer = torch.optim.AdamW(
@@ -135,15 +148,16 @@ def main():
             # Move batch to device
             batch = batch.to(device)
             
-            # Training step
-            optimizer.zero_grad()
+            # Training step with gradient accumulation
             loss, metrics = trainer.training_step(batch)
+            loss = loss / gradient_accumulation_steps
             loss.backward()
             
-            # Gradient clipping
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-            
-            optimizer.step()
+            # Gradient clipping and optimizer step
+            if (batch_idx + 1) % gradient_accumulation_steps == 0:
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                optimizer.step()
+                optimizer.zero_grad()
             
             # Log metrics
             timing = timer.step()
@@ -158,8 +172,9 @@ def main():
                       f"Time: {timing['step_time']:.2f}s | "
                       f"Steps/s: {timing['steps_per_second']:.2f}")
             
-            # Save checkpoint
-            if step % 100 == 0 and step > 0:
+            # Save checkpoint every 5000 steps (reduced from 100 to avoid slowdown)
+            if step % 5000 == 0 and step > 0:
+                print(f"Saving checkpoint at step {step}...")
                 checkpoint_manager.save_checkpoint(
                     model, optimizer, step, loss.item(), metrics, is_best=False
                 )

@@ -35,6 +35,7 @@ env/
 
 # Data and models
 data/
+!src/dllm/data/
 models/
 checkpoints/
 wandb/

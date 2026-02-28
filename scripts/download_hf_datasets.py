@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 def download_hf_dataset(dataset_name: str, output_dir: str, split: str = "train", max_samples: int = None):
     """Download a Hugging Face dataset."""
-    print(f"\n📥 Downloading {dataset_name}...")
+    print(f"\n[DOWNLOAD] {dataset_name}...")
     
     try:
         dataset = load_dataset(dataset_name, split=split, streaming=True)
@@ -37,11 +37,11 @@ def download_hf_dataset(dataset_name: str, output_dir: str, split: str = "train"
                     f.write(text.strip() + "\n\n")
                     count += 1
         
-        print(f"✅ Saved {count} samples to {output_file}")
+        print(f"[DONE] Saved {count} samples to {output_file}")
         return count
         
     except Exception as e:
-        print(f"❌ Error downloading {dataset_name}: {e}")
+        print(f"[ERROR] {dataset_name}: {e}")
         return 0
 
 
@@ -68,7 +68,7 @@ def download_russian_datasets(output_dir: str):
         count = download_hf_dataset(dataset_name, output_dir, split, max_samples)
         total_samples += count
     
-    print(f"\n🎉 Total samples downloaded: {total_samples}")
+    print(f"\n[TOTAL] Downloaded: {total_samples} samples")
 
 
 def main():
@@ -92,7 +92,7 @@ def main():
         print("Visit: https://www.kaggle.com/datasets?search=russian+text")
         print("="*50)
     
-    print("\n✅ Done!")
+    print("\n[DONE]")
 
 
 if __name__ == "__main__":

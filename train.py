@@ -37,7 +37,7 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    # Load tokenizer
+    # Load tokenizer first to get vocab size
     print("Loading tokenizer...")
     tokenizer = spm.SentencePieceProcessor()
     tokenizer.load(args.tokenizer_path)
@@ -49,7 +49,7 @@ def main():
     
     @dataclass
     class ModelConfig:
-        vocab_size: int = vocab_size
+        vocab_size: int = 4000  # Will override this
         hidden_size: int = 512  # Reduced for faster training
         num_layers: int = 8     # Reduced for faster training
         num_heads: int = 8
@@ -59,7 +59,7 @@ def main():
         rope_theta: float = 10000.0
         dropout: float = 0.0
     
-    config = ModelConfig()
+    config = ModelConfig(vocab_size=vocab_size)
     
     # Initialize model
     print("Initializing model...")

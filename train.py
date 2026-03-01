@@ -51,11 +51,11 @@ def main():
     @dataclass
     class ModelConfig:
         vocab_size: int = 52256
-        hidden_size: int = 1024 if args.full_model else 512
-        num_layers: int = 24 if args.full_model else 8
-        num_heads: int = 16 if args.full_model else 8
+        hidden_size: int = 768  # Reduced from 1024 for 300M model
+        num_layers: int = 16  # Reduced from 24 for speed
+        num_heads: int = 12  # Reduced from 16
         max_position_embeddings: int = 2048
-        intermediate_size: int = 4096 if args.full_model else 2048
+        intermediate_size: int = 3072  # Reduced from 4096
         rms_norm_eps: float = 1e-6
         rope_theta: float = 10000.0
         dropout: float = 0.0
@@ -100,8 +100,8 @@ def main():
     dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True, num_workers=0)
     print(f"Dataset size: {len(dataset)}")
     
-    # Gradient accumulation
-    gradient_accumulation_steps = 4  # Effective batch size = batch_size * 4
+    # Gradient accumulation - larger for smaller model
+    gradient_accumulation_steps = 8  # Effective batch size = batch_size * 8 = 8
     print(f"Gradient accumulation steps: {gradient_accumulation_steps}")
     
     # Initialize optimizer

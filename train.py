@@ -192,4 +192,9 @@ def main():
 
 
 if __name__ == "__main__":
+    import os
+    # Fix CUDA alignment issues
+    os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
+    os.environ['TORCH_CUDNN_V8_API_ENABLED'] = '0'
+    
     main()
